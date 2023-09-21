@@ -1,4 +1,4 @@
-class Api::V1::MotorcycleController < ApplicationController
+class Api::V1::MotorcyclesController < ApplicationController
   def index
     @user = User.first
     @motorcycle = @user.motorcycles.all
