@@ -26,7 +26,8 @@ development:
   database: vespa_retails_backend_development
   host: localhost
   username: postgres
-  password: safari
+  # password: safari
+  password: microverse
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -63,8 +64,8 @@ test:
   database: vespa_retails_backend_test
   host: localhost
   username: postgres
-  password: safari
-
+  # password: safari
+  password: microverse
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
