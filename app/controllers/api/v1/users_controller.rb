@@ -3,9 +3,10 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render_user(user)
+      authenticate_users(user)
+      render_authenticated_users(user)
     else
-      render_error_response(user.errors)
+      render_error(user.errors)
     end
   end
 
@@ -15,14 +16,19 @@ class Api::V1::UsersController < ApplicationController
     params.require(:user).permit(:username)
   end
 
-  def render_user(user)
+  def authenticate_users(user)
+    token = AuthenticationTokenService.call(user.id) # Generate token
+    response.headers['Authorization'] = "Bearer #{token}" # Set token in response header
+  end
+
+  def render_authenticated_users(user)
     render json: {
-      user: { id: user.id, username: user.username },
-      message: 'User successfully created.'
+      user: { id: user.id, username: user.username, token: response.headers['Authorization'] },
+      message: 'Authentication of user successful.'
     }, status: :created
   end
 
-  def render_error_response(errors)
+  def render_error(errors)
     render json: {
       error: errors.full_messages.join(' ')
     }, status: :unprocessable_entity
