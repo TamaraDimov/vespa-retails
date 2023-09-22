@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
+  get '/current_user', to: 'current_user#index'
+  devise_for :users, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    registration: 'signup'
+  },
+  controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+
  namespace :api do
   namespace :v1 do
     resources :motorcycles
-    resources :reservations, except: [:new, :edit]
+    resources :reservations, except: [:new, :edit]s
   end
  end
 end
