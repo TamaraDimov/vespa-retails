@@ -4,8 +4,7 @@ class Api::V1::ReservationsController < ApplicationController
 
     def index
     #   reservations = current_user.reservations
-      @user = User.first
-      reservations = @user.reservations
+      reservations = Reservation.all
       render json: reservations
     end
   
