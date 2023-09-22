@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true
 
-#   attribute :created_date do |user|
-#     user.created_at && user.created_at.strftime('%m/%d/%Y')
-#   end
+  #   attribute :created_date do |user|
+  #     user.created_at && user.created_at.strftime('%m/%d/%Y')
+  #   end
 end
