@@ -1,6 +1,8 @@
-class Api::V1::MotorcycleController < ApplicationController
+class Api::V1::MotorcyclesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @user = User.first
+    @user = current_user
     @motorcycle = @user.motorcycles.all
     return render json: @motorcycle if @motorcycle
 
@@ -8,7 +10,7 @@ class Api::V1::MotorcycleController < ApplicationController
   end
 
   def show
-    @user = User.first
+    @user = current_user
     @motorcycle = @user.motorcycles.find_by(id: params[:id])
     return render json: @motorcycle, status: :ok if @motorcycle
 
@@ -20,7 +22,7 @@ class Api::V1::MotorcycleController < ApplicationController
   def create
     data = params
     Motorcycle.create!(name: data['name'], model: data['model'], description: data['description'],
-                       photo: data['photo'], user: User.first)
+                       photo: data['photo'], user: current_user)
     render json: { message: 'Created' }, status: :created
   rescue StandardError
     render json: { message: 'The request parameters are invalid. Please check your input and try again.' },
