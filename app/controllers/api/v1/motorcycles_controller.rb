@@ -28,4 +28,15 @@ class Api::V1::MotorcyclesController < ApplicationController
     render json: { message: 'The request parameters are invalid. Please check your input and try again.' },
            status: :unprocessable_entity
   end
+
+  def destroy
+    @motorcycle = current_user.motorcycles.find_by(id: params[:id])
+
+    if @motorcycle
+      @motorcycle.destroy
+      render json: { message: 'Motorcycle deleted successfully' }, status: :ok
+    else
+      render json: { message: 'Motorcycle not found' }, status: :not_found
+    end
+  end
 end
