@@ -3,8 +3,8 @@ class Api::V1::ReservationsController < ApplicationController
     before_action :set_reservation, only: [:show, :destroy]
 
     def index
-      reservations = current_user.reservations
-      render json: reservations
+      reservations = current_user.reservations.includes(:motorcycle)
+      render json: reservations.to_json(include: { motorcycle: { only: :name } })
     end
   
     def show
