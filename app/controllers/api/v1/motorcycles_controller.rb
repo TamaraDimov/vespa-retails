@@ -28,4 +28,9 @@ class Api::V1::MotorcyclesController < ApplicationController
     render json: { message: 'The request parameters are invalid. Please check your input and try again.' },
            status: :unprocessable_entity
   end
+
+  def destroy
+    @motorcycle.destroy
+    head :no_content
+  end
 end
