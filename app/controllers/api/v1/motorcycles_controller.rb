@@ -30,7 +30,13 @@ class Api::V1::MotorcyclesController < ApplicationController
   end
 
   def destroy
-    @motorcycle.destroy
-    head :no_content
+    @motorcycle = current_user.motorcycles.find_by(id: params[:id])
+
+    if @motorcycle
+      @motorcycle.destroy
+      render json: { message: 'Motorcycle deleted successfully' }, status: :ok
+    else
+      render json: { message: 'Motorcycle not found' }, status: :not_found
+    end
   end
 end
