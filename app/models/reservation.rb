@@ -1,4 +1,4 @@
 class Reservation < ApplicationRecord
   belongs_to :user, class_name: 'User'
-  has_many :motorcycles
+  belongs_to :motorcycle, class_name: 'Motorcycle'
 end

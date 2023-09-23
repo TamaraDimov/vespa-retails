@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         status: { code: 200, message: 'Signed up sucessfully.' },
         data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
       }, status: :ok
+      puts resource.persisted?
     elsif request.method == 'DELETE'
       render json: {
         status: { code: 200, message: 'Account deleted successfully.' }
