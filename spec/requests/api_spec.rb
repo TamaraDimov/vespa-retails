@@ -33,6 +33,7 @@ RSpec.describe 'API', type: :request do
         run_test!
       end
     end
+
     post 'Create a motorcycle' do
       tags 'Motorcycles'
       consumes 'application/json'
@@ -125,7 +126,8 @@ RSpec.describe 'API', type: :request do
         run_test!
       end
     end
-post 'Create a reservation' do
+
+    post 'Create a reservation' do
       tags 'Reservations'
       consumes 'application/json'
       parameter name: :reservation, in: :body, schema: {
