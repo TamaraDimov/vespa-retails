@@ -125,3 +125,64 @@ RSpec.describe 'API', type: :request do
         run_test!
       end
     end
+post 'Create a reservation' do
+      tags 'Reservations'
+      consumes 'application/json'
+      parameter name: :reservation, in: :body, schema: {
+        type: :object,
+        properties: {
+          start_date: { type: :string, format: 'date' },
+          end_date: { type: :string,format: 'date' },
+          city: { type: :string },
+          user_id: { type: :integer },
+          motorcycle_id: { type: :integer }
+        },
+        required: ['start_date', 'end_date', 'city', 'user_id', 'motorcycle_id']
+      }
+
+      response '201', 'Created' do
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/reservations/{id}' do
+    parameter name: :id, in: :path, type: :integer, required: true
+
+    get 'Retrieve a specific reservation' do
+      tags 'Reservations'
+      produces 'application/json'
+
+      response '200', 'OK' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 start_date: { type: :string, format: 'date' },
+                 end_date: { type: :string, format: 'date' },
+                 city: { type: :string },
+                 user_id: { type: :integer },
+                 motorcycle_id: { type: :integer }
+               },
+               required: ['id', 'start_date', 'end_date', 'city', 'user_id', 'motorcycle_id']
+
+        run_test!
+      end
+
+      response '404', 'Resource not found' do
+        run_test!
+      end
+    end
+
+    delete 'Delete a reservation' do
+      tags 'Reservations'
+
+      response '204', 'No Content' do
+        run_test!
+      end
+    end
+  end
+end
