@@ -50,7 +50,7 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails'
 end
 
 gem 'rubocop', '>= 1.0', '< 2.0'
