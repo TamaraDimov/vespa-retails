@@ -1,43 +1,104 @@
-# spec/controllers/motorcycles_controller_spec.rb
-
 require 'rails_helper'
 
-describe MotorcyclesController do
-  let(:motorcycle) { create(:motorcycle) }
+RSpec.describe Api::V1::MotorcyclesController, type: :controller do
+  describe 'GET #index' do
+    let(:user) { create(:user) }
+    let!(:motorcycle1) { create(:motorcycle, user: user) }
+    let!(:motorcycle2) { create(:motorcycle, user: user) }
+    let!(:motorcycle3) { create(:motorcycle) }
 
-  it 'index' do
-    get :index
-    expect(response).to have_http_status(:success)
-    expect(response).to render_template('index')
+    before do
+      sign_in user
+      get :index
+    end
+
+    it 'returns a success response' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'returns all motorcycles for the current user' do
+      expect(assigns(:motorcycles)).to match_array([motorcycle1, motorcycle2])
+    end
   end
 
-  it 'show' do
-    get :show, params: { id: motorcycle.id }
-    expect(response).to have_http_status(:success)
-    expect(response).to render_template('show')
+  describe 'GET #show' do
+    let(:motorcycle) { create(:motorcycle) }
+
+    before do
+      get :show, params: { id: motorcycle.id }
+    end
+
+    it 'returns a success response' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'returns the correct motorcycle' do
+      expect(assigns(:motorcycle)).to eq(motorcycle)
+    end
   end
 
-  it 'create' do
-    post :create, params: { motorcycle: { name: 'My Motorcycle', photo: 'my_motorcycle.jpg', description: 'My Motorcycle Description', model: 'My Motorcycle Model' } }
-    expect(response).to have_http_status(:redirect)
-    expect(Motorcycle.last).to have_attributes(name: 'My Motorcycle', photo: 'my_motorcycle.jpg', description: 'My Motorcycle Description', model: 'My Motorcycle Model')
+  describe 'POST #create' do
+    context 'when valid parameters are provided' do
+      let(:user) { create(:user) }
+      let(:valid_params) { { motorcycle: { make: 'My Motorcycle', model: 'My Motorcycle Model', year: '2021' } } }
+
+      before do
+        sign_in user
+      end
+
+      it 'creates a new motorcycle' do
+        expect do
+          post :create, params: valid_params
+        end.to change(Motorcycle, :count).by(1)
+      end
+
+      it 'returns a success response' do
+        post :create, params: valid_params
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when invalid parameters are provided' do
+      let(:user) { create(:user) }
+      let(:invalid_params) { { motorcycle: { make: '', model: 'My Motorcycle Model', year: '2021' } } }
+
+      before do
+        sign_in user
+        post :create, params: invalid_params
+      end
+
+      it 'does not create a new motorcycle' do
+        expect do
+          post :create, params: invalid_params
+        end.not_to change(Motorcycle, :count)
+      end
+
+      it 'returns an error response with error details' do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response_body['errors']).to be_present
+      end
+    end
   end
 
-  it 'edit' do
-    get :edit, params: { id: motorcycle.id }
-    expect(response).to have_http_status(:success)
-    expect(response).to render_template('edit')
+  describe 'DELETE #destroy' do
+    let(:user) { create(:user) }
+    let!(:motorcycle) { create(:motorcycle, user: user) }
+
+    before do
+      sign_in user
+      delete :destroy, params: { id: motorcycle.id }
+    end
+
+    it 'deletes the motorcycle' do
+      expect(Motorcycle.find_by(id: motorcycle.id)).to be_nil
+    end
+
+    it 'returns a success response' do
+      expect(response).to have_http_status(200)
+    end
   end
 
-  it 'update' do
-    put :update, params: { id: motorcycle.id, motorcycle: { name: 'Updated Motorcycle', photo: 'updated_motorcycle.jpg', description: 'Updated Motorcycle Description', model: 'Updated Motorcycle Model' } }
-    expect(response).to have_http_status(:redirect)
-    expect(Motorcycle.find(motorcycle.id)).to have_attributes(name: 'Updated Motorcycle', photo: 'updated_motorcycle.jpg', description: 'Updated Motorcycle Description', model: 'Updated Motorcycle Model')
-  end
-
-  it 'destroy' do
-    delete :destroy, params: { id: motorcycle.id }
-    expect(response).to have_http_status(:redirect)
-    expect(Motorcycle.find_by(id: motorcycle.id)).to be_nil
+  def response_body
+    JSON.parse(response.body)
   end
 end

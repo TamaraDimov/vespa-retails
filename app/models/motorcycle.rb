@@ -5,4 +5,6 @@ class Motorcycle < ApplicationRecord
   validates :photo, presence: true
   validates :description, presence: true
   validates :model, presence: true
+  validates :make, presence: true
 end
+
