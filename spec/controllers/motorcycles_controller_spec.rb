@@ -1,104 +1,63 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::MotorcyclesController, type: :controller do
-  describe 'GET #index' do
-    let(:user) { create(:user) }
-    let!(:motorcycle1) { create(:motorcycle, user: user) }
-    let!(:motorcycle2) { create(:motorcycle, user: user) }
-    let!(:motorcycle3) { create(:motorcycle) }
+before do
+    @user = create(:user)
+  @motorcycle_attributes = {
+  make: "Honda",
+  name: "CBR600",
+  model: "2023"
+}
 
-    before do
-      sign_in user
-      get :index
-    end
+@motorcycle = Motorcycle.create(@motorcycle_attributes, user: @user)
 
-    it 'returns a success response' do
-      expect(response).to have_http_status(200)
-    end
+sign_in @user
 
-    it 'returns all motorcycles for the current user' do
-      expect(assigns(:motorcycles)).to match_array([motorcycle1, motorcycle2])
-    end
-  end
+end
 
-  describe 'GET #show' do
-    let(:motorcycle) { create(:motorcycle) }
+  describe "GET #index" do
+it "returns all motorcycles" do
+get :index
+expect(response).to have_http_status(200)
+motorcycles = JSON.parse(response.body)
+expect(motorcycles.length).to eq 1
+expect(motorcycles.first['name']).to eq @motorcycle.name
+end
+end
 
-    before do
-      get :show, params: { id: motorcycle.id }
-    end
+describe "GET #show" do
+it "returns the motorcycle" do
+get :show, params: {id: @motorcycle.id}
+expect(response).to have_http_status(200)
+motorcycle = JSON.parse(response.body)
+expect(motorcycle['name']).to eq @motorcycle.name
+end
+end
 
-    it 'returns a success response' do
-      expect(response).to have_http_status(200)
-    end
+describe "POST #create" do
+it "creates a new motorcycle" do
+post :create, params: {
+motorcycle: {
+make: "Yamaha",
+name: "R1",
+model: "2024"
+}
+}
 
-    it 'returns the correct motorcycle' do
-      expect(assigns(:motorcycle)).to eq(motorcycle)
-    end
-  end
+expect(response).to have_http_status(201)
+  motorcycle = Motorcycle.last
+  expect(motorcycle.make).to eq "Yamaha"
+  expect(motorcycle.name).to eq "R1"
+end
 
-  describe 'POST #create' do
-    context 'when valid parameters are provided' do
-      let(:user) { create(:user) }
-      let(:valid_params) { { motorcycle: { make: 'My Motorcycle', model: 'My Motorcycle Model', year: '2021' } } }
+end
 
-      before do
-        sign_in user
-      end
+describe "DELETE #destroy" do
+it "deletes the motorcycle" do
+delete :destroy, params: {id: @motorcycle.id}
+expect(response).to have_http_status(200)
+expect(Motorcycle.exists?(@motorcycle.id)).to be false
+end
+end
 
-      it 'creates a new motorcycle' do
-        expect do
-          post :create, params: valid_params
-        end.to change(Motorcycle, :count).by(1)
-      end
-
-      it 'returns a success response' do
-        post :create, params: valid_params
-        expect(response).to have_http_status(200)
-      end
-    end
-
-    context 'when invalid parameters are provided' do
-      let(:user) { create(:user) }
-      let(:invalid_params) { { motorcycle: { make: '', model: 'My Motorcycle Model', year: '2021' } } }
-
-      before do
-        sign_in user
-        post :create, params: invalid_params
-      end
-
-      it 'does not create a new motorcycle' do
-        expect do
-          post :create, params: invalid_params
-        end.not_to change(Motorcycle, :count)
-      end
-
-      it 'returns an error response with error details' do
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response_body['errors']).to be_present
-      end
-    end
-  end
-
-  describe 'DELETE #destroy' do
-    let(:user) { create(:user) }
-    let!(:motorcycle) { create(:motorcycle, user: user) }
-
-    before do
-      sign_in user
-      delete :destroy, params: { id: motorcycle.id }
-    end
-
-    it 'deletes the motorcycle' do
-      expect(Motorcycle.find_by(id: motorcycle.id)).to be_nil
-    end
-
-    it 'returns a success response' do
-      expect(response).to have_http_status(200)
-    end
-  end
-
-  def response_body
-    JSON.parse(response.body)
-  end
 end

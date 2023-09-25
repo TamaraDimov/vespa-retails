@@ -1,8 +1,9 @@
 FactoryBot.define do
   factory :motorcycle do
-    make { Faker::Vehicle.make }
-    model { Faker::Vehicle.model }
-    year { Faker::Vehicle.year }
-    user
+    make { "Honda" }
+    name { "CBR600" }
+    model { "2023" }
+    description { "A motorcycle" }
+    association :user
   end
 end
