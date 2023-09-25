@@ -20,13 +20,13 @@ class Api::V1::MotorcyclesController < ApplicationController
   end
 
   def create
-    data = params
-    Motorcycle.create!(name: data['name'], model: data['model'], description: data['description'],
-                       photo: data['photo'], user: current_user)
-    render json: { message: 'Created' }, status: :created
-  rescue StandardError
-    render json: { message: 'The request parameters are invalid. Please check your input and try again.' },
-           status: :unprocessable_entity
+    @motorcycle = Motorcycle.new(motorcycle_params.merge(user: current_user))
+
+    if @motorcycle.save
+      render json: { message: 'Created' }, status: :created
+    else
+      render json: { errors: @motorcycle.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -38,5 +38,11 @@ class Api::V1::MotorcyclesController < ApplicationController
     else
       render json: { message: 'Motorcycle not found' }, status: :not_found
     end
+  end
+
+  private
+
+  def motorcycle_params
+    params.require(:motorcycle).permit(:name, :model, :description, :photo, :make)
   end
 end

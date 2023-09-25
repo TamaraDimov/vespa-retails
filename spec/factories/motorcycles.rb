@@ -1,9 +1,8 @@
 FactoryBot.define do
   factory :motorcycle do
-    make { "Honda" }
-    name { "CBR600" }
-    model { "2023" }
-    description { "A motorcycle" }
-    association :user
+    name { 'Test Motorcycle' }
+    model { 'Test Model' }
+    description { 'Test Description' }
+    make { 'Test Make' }
   end
 end

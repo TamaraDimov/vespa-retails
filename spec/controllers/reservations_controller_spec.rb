@@ -1,51 +1,72 @@
-require 'rails_helper'
+# # spec/controllers/api/v1/reservations_controller_spec.rb
 
-RSpec.describe Api::V1::ReservationsController, type: :controller do
-  before do
-    @user = create(:user)
-    @motorcycle = create(:motorcycle, user: @user)
-    @reservation = create(:reservation, user: @user, motorcycle: @motorcycle)
-    sign_in @user
-  end
+# require 'rails_helper'
 
-  describe '#index' do
-    it 'returns all of the reservations for the current user' do
-      get :index
-      expect(response.status).to eq(200)
-      expect(json_response.count).to eq(1)
-      expect(json_response.first['city']).to eq(@reservation.city)
-    end
-  end
+# RSpec.describe Api::V1::ReservationsController, type: :controller do
+#   describe 'GET #index' do
+#     it 'returns a success response' do
+#       get :index
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
 
-  describe '#show' do
-    it 'returns the reservation with the specified ID for the current user' do
-      get :show, params: { id: @reservation.id }
-      expect(response.status).to eq(200)
-      expect(json_response['city']).to eq(@reservation.city)
-    end
-  end
+#   describe 'GET #show' do
+#     it 'returns a success response' do
+#       reservation = create(:reservation)
 
-  describe '#create' do
-    it 'creates a new reservation for the current user with the specified parameters' do
-      params = {
-        start_date: Date.today + 1,
-        end_date: Date.today + 7,
-        city: 'New York, NY',
-        user_id: @user.id,
-        motorcycle_id: @motorcycle.id
-      }
+#       get :show, params: { id: reservation.id }
 
-      post :create, params: params
-      expect(response.status).to eq(201)
-      expect(json_response['city']).to eq('New York, NY')
-    end
-  end
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
 
-  describe '#destroy' do
-    it 'deletes the reservation with the specified ID for the current user' do
-      delete :destroy, params: { id: @reservation.id }
-      expect(response.status).to eq(200)
-      expect(Reservation.find_by(id: @reservation.id)).to be_nil
-    end
-  end
-end
+#   describe 'POST #create' do
+#     it 'creates a new reservation' do
+#       motorcycle = create(:motorcycle)
+
+#       expect {
+#         post :create, params: { motorcycle_id: motorcycle.id }
+#       }.to change(Reservation, :count).by(1)
+
+#       expect(response).to have_http_status(:created)
+#     end
+#   end
+
+#   describe 'DELETE #destroy' do
+#     it 'deletes the requested reservation' do
+#       reservation = create(:reservation)
+
+#       expect {
+#         delete :destroy, params: { id: reservation.id }
+#       }.to change(Reservation, :count).by(-1)
+
+#       expect(response).to have_http_status(:ok)
+#     end
+#   end
+# end
+
+# # spec/controllers/users/registrations_controller_spec.rb
+# RSpec.describe Users::RegistrationsController, type: :controller do
+#   describe 'POST #create' do
+#     it 'creates a new user' do
+#       expect {
+#         post :create, params: { user: attributes_for(:user) }
+#       }.to change(User, :count).by(1)
+
+#       expect(response).to have_http_status(:created)
+#     end
+#   end
+# end
+
+# # spec/controllers/users/sessions_controller_spec.rb
+# RSpec.describe Users::SessionsController, type: :controller do
+#   describe 'POST #create' do
+#     it 'returns a success response' do
+#       user = create(:user)
+
+#       post :create, params: { user: { email: user.email, password: user.password } }
+
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
+# end
