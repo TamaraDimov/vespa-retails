@@ -26,9 +26,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context 'with valid parameters' do
       it 'creates a new user' do
-        expect {
+        expect do
           post :create, params: valid_params
-        }.to change(User, :count).by(1)
+        end.to change(User, :count).by(1)
         expect(response).to have_http_status(:created)
         expect(response.body).to include('Created')
       end
