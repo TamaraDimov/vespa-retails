@@ -24,9 +24,9 @@ default: &default
 development:
   <<: *default
   database: vespa_retails_backend_development
-  # host: localhost
-  # username: postgres
-  # password: safari
+  host: localhost
+  username: postgres
+  password: safari
   # password: 1234
 
   # The specified database role being used to connect to postgres.
