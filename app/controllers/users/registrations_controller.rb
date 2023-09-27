@@ -1,13 +1,18 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include RackSessionFix
   respond_to :json
 
   def respond_with(resource, _opts = {})
+    request.headers.each { |head| puts head }
     if request.method == 'POST' && resource.persisted?
+      current_token = request.env['warden-jwt_auth.token']
+      user_data = UserSerializer.new(resource).serializable_hash[:data][:attributes]
+      request.headers.each { |head| puts head }
       render json: {
         status: { code: 200, message: 'Signed up sucessfully.' },
-        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+        user: { data: user_data, token: current_token }
       }, status: :ok
-      puts resource.persisted?
+      
     elsif request.method == 'DELETE'
       render json: {
         status: { code: 200, message: 'Account deleted successfully.' }
