@@ -88,6 +88,4 @@ test:
 #
 production:
   <<: *default
-  database: vespa_retails_backend_production
-  username: vespa_retails_backend
-  password: <%= ENV["VESPA_RETAILS_BACKEND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
