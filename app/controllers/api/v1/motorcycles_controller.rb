@@ -33,6 +33,8 @@ class Api::V1::MotorcyclesController < ApplicationController
     @motorcycle = current_user.motorcycles.find_by(id: params[:id])
 
     if @motorcycle
+      @reservation = Reservation.where(motorcycle: @motorcycle)
+      @reservation.destroy_all
       @motorcycle.destroy
       render json: { message: 'Motorcycle deleted successfully' }, status: :ok
     else
