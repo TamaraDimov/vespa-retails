@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V1
+  title: VESPA API V1
   version: v1
 paths:
   "/api/v1/motorcycles":
@@ -218,7 +218,7 @@ paths:
         '204':
           description: No Content
 servers:
-- url: https://{defaultHost}
+- url: https://vespa.onrender.com/
   variables:
     defaultHost:
-      default: www.example.com
+      default: https://vespa.onrender.com/

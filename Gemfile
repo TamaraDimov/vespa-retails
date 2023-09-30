@@ -24,7 +24,7 @@ gem 'rswag'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
-gem 'devise'
+gem 'devise', '~> 4.9'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
