@@ -1,8 +1,8 @@
 RSpec.describe Reservation, type: :model do
   let(:user) { User.create(username: 'testuser', email: 'testuser@example.com', password: 'password') }
   let(:motorcycle) do
-    Motorcycle.create(name: 'Test Motorcycle', model: 'Test Model', description: 'Test Description', photo: 'Test Photo',
-                      user:)
+    Motorcycle.create(name: 'Test Motorcycle', model: 'Test Model',
+                      description: 'Test Description', photo: 'Test Photo', user:)
   end
 
   describe 'validations' do
