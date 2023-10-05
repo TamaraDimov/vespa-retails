@@ -1,6 +1,6 @@
 <div align="center">
   <!-- You are encouraged to replace this logo with your own! Otherwise you can also remove it. -->
- <img src="./src/assets/vespa.png" alt="logo" width="140"  height="auto" />
+ <img src="./vespa.png" alt="logo" width="140"  height="auto" />
   <br/>
   <h2><b> MOTORCYCLE RENTAL STORE</b></h2>
 </div>
@@ -130,9 +130,9 @@ _**Reservations:**_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🚀 Live Demo
+## 🚀 Live Demo <a name="Live-Demo"></a>
 
-To see this project's live demo, please (click here)[https://rent-motorcycles.onrender.com].
+To see this project's live demo, please click [here](https://rent-motorcycles.onrender.com).
 
 ## 🧾 Database Structure: <a name="erd"></a>
 
@@ -148,7 +148,7 @@ To see this project's live demo, please (click here)[https://rent-motorcycles.on
 
 [](https://github.com/TamaraDimov/vespa-rentals-backend)
 
-<img src="">
+<img src="./schema.png" alt="Schema diagram" width="auto"  height="auto" />
 
 ## 📄 Project Documentation <a name="project-documentation"></a>
 
@@ -189,7 +189,7 @@ _In order to run this project you need:_
 
 - Mac or PC
 - Install node.js
-- Use npm as a package manager.
+- Use npm as package manager.
 - Understanding of React and Redux
 
 ## Front end
@@ -258,32 +258,25 @@ You can deploy this project using:
 
 ```
 
-```
-
 ### Install
 
 Install the project dependencies with:
 
 ```
-
-bundle install
-rails db:create
-rails db:migrate
-
+  bundle install
+  rails db:create
+  rails db:migrate
 ```
 
-- And Make sure to delete Master key and credentials.yml.enc
-
-- Here are the steps to Edit Open your terminal or command prompt.
-
--> Navigate to the root directory of your Ruby on Rails application.
+- And Make sure to delete the Master key and credentials.yml.enc
+- Here are the steps needed to create your own Credentials.
+- Edit Open your terminal or command prompt.
+- Navigate to the root directory of your Ruby on Rails application.
 
 Run the following command:
 
 ```
-
 rails credentials:edit command:
-
 ```
 
 ### Usage<a name="usage"></a>
@@ -291,9 +284,7 @@ rails credentials:edit command:
 To run the project, execute the following command:
 
 ```
-
-rails server or rails s
-
+  rails server or rails s
 ```
 
 ### Run tests
@@ -301,10 +292,8 @@ rails server or rails s
 To run the tests, run the following command:
 
 ```
-
-rspec ./spec/models
-rspec ./spec/controllers
-
+  rspec ./spec/models
+  rspec ./spec/controllers
 ```
 
 ### Deployment
@@ -312,14 +301,12 @@ rspec ./spec/controllers
 You can deploy this project using:
 
 ```
-
-./bin/dev
-
+  ./bin/dev
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 👥 Authors / Team members <a name="author"></a>
+## 👥 Authors / Team members <a name="authors"></a>
 
 👤 **Tamara Dimov**
 
@@ -363,13 +350,14 @@ _Feel free to check the [issues page](https://github.com/TamaraDimov/vespa-renta
 
 _If you like this project, please give it a ⭐️ !_
 
-## Acknowledgments
+## Acknowledgments <a name="acknowledgements"></a>
 
 - [Microverse](https://www.microverse.org/)
+
+- We would like to thank [Murat Korkmaz](https://www.behance.net/muratk) for the design guidelines.
 
 ## 📝 License <a name="license"></a>
 
 _This project is [MIT](./LICENSE) licensed._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-```
