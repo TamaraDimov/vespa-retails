@@ -169,11 +169,11 @@ _We used a Kanban board to track the progress of tasks and issues. The board is 
 
 <img src="./init kanban .png" alt="logo" width="auto"  height="auto" />
 
-  </details>Final State;</summary>
+  </details>Final State</summary>
 
   <details>
     
-<img src="" alt="logo" width="auto"  height="auto" />
+<img src="./final kanban.png" alt="final state of the kanban board" width="auto"  height="auto" />
 
   </details>
 </details>
@@ -258,7 +258,6 @@ You can deploy this project using:
 
 ```
 
-
 ```
 
 ### Install
@@ -266,9 +265,11 @@ You can deploy this project using:
 Install the project dependencies with:
 
 ```
-  bundle install
-  rails db:create
-  rails db:migrate
+
+bundle install
+rails db:create
+rails db:migrate
+
 ```
 
 - And Make sure to delete Master key and credentials.yml.enc
@@ -278,9 +279,11 @@ Install the project dependencies with:
 -> Navigate to the root directory of your Ruby on Rails application.
 
 Run the following command:
-   
+
 ```
-rails credentials:edit command: 
+
+rails credentials:edit command:
+
 ```
 
 ### Usage<a name="usage"></a>
@@ -288,7 +291,9 @@ rails credentials:edit command:
 To run the project, execute the following command:
 
 ```
-  rails server or rails s
+
+rails server or rails s
+
 ```
 
 ### Run tests
@@ -296,8 +301,10 @@ To run the project, execute the following command:
 To run the tests, run the following command:
 
 ```
-  rspec ./spec/models
-  rspec ./spec/controllers
+
+rspec ./spec/models
+rspec ./spec/controllers
+
 ```
 
 ### Deployment
@@ -305,7 +312,9 @@ To run the tests, run the following command:
 You can deploy this project using:
 
 ```
-  ./bin/dev
+
+./bin/dev
+
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -363,3 +372,4 @@ _If you like this project, please give it a ⭐️ !_
 _This project is [MIT](./LICENSE) licensed._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+```
